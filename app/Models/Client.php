@@ -6,7 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Admin extends Authenticatable implements JWTSubject
+class Client extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
     /**
@@ -18,6 +18,8 @@ class Admin extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'photo',
+        'location',
     ];
     /**
      * The attributes that should be hidden for arrays.

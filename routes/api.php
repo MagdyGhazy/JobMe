@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\ClientAuthController;
+use App\Http\Controllers\WorkerAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,7 +15,35 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::group([
+    'middleware' => ['DbBackup'],
+    'prefix' => 'auth/admin'
+], function ($router) {
+    Route::post('/login', [AdminAuthController::class, 'login']);
+    Route::post('/register', [AdminAuthController::class, 'register']);
+    Route::post('/logout', [AdminAuthController::class, 'logout']);
+    Route::post('/refresh', [AdminAuthController::class, 'refresh']);
+    Route::get('/user-profile', [AdminAuthController::class, 'userProfile']);
+});
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'middleware' => ['DbBackup'],
+    'prefix' => 'auth/workers'
+], function ($router) {
+    Route::post('/login', [WorkerAuthController::class, 'login']);
+    Route::post('/register', [WorkerAuthController::class, 'register']);
+    Route::post('/logout', [WorkerAuthController::class, 'logout']);
+    Route::post('/refresh', [WorkerAuthController::class, 'refresh']);
+    Route::get('/user-profile', [WorkerAuthController::class, 'userProfile']);
+});
+
+Route::group([
+    'middleware' => ['DbBackup'],
+    'prefix' => 'auth/clients'
+], function ($router) {
+    Route::post('/login', [ClientAuthController::class, 'login']);
+    Route::post('/register', [ClientAuthController::class, 'register']);
+    Route::post('/logout', [ClientAuthController::class, 'logout']);
+    Route::post('/refresh', [ClientAuthController::class, 'refresh']);
+    Route::get('/user-profile', [ClientAuthController::class, 'userProfile']);
 });

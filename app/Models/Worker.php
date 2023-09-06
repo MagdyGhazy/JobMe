@@ -21,6 +21,9 @@ class Worker extends Authenticatable implements JWTSubject
         'phone',
         'photo',
         'location',
+        'status',
+        'verification_token',
+        'verified_at',
     ];
     /**
      * The attributes that should be hidden for arrays.

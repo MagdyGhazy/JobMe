@@ -21,6 +21,9 @@ return new class extends Migration
             $table->string('phone');
             $table->string('photo');
             $table->string('location');
+            $table->boolean('status')->default(0);
+            $table->string('verification_token')->nullable();
+            $table->dateTime('verified_at')->nullable();
             $table->timestamps();
         });
     }

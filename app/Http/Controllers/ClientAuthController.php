@@ -52,6 +52,7 @@ class ClientAuthController extends Controller
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
+
         $user = Client::create(array_merge(
             $validator->validated(),
             [

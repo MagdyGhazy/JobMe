@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminAuthController extends Controller
 {
+
     /**
      * Create a new AuthController instance.
      *
@@ -22,6 +23,7 @@ class AdminAuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function login(Request $request){
+        $x = 5;
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:6',

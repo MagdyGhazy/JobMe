@@ -24,7 +24,7 @@ class PostServices
 
     public function allPosts()
     {
-       return $this->model->get()->makeHidden('status');
+       return $this->model->with('worker:id,name')->get()->makeHidden(['status','worker_id','created_at','updated_at']);
     }
 
     public function showPost($id)
@@ -43,10 +43,21 @@ class PostServices
         return response()->json(['message'=>'status changed successfully']);
     }
 
+    /**
+     * @return Post
+     */
+    public function postPrice($price)
+    {
+        $discount = 0.05;
+        $priceAfterDiscount = $price - ($price * $discount);
+        return $priceAfterDiscount;
+    }
+
 
      public function storePost($request)
      {
          $data = $request->except('photo');
+         $data['price'] = $this->postPrice($data['price']);
          $data['worker_id'] = auth()->guard('worker')->id();
          $post = Post::create($data);
          return $post;
@@ -76,7 +87,7 @@ class PostServices
              $this->storePhoto($request, $post);
              $this->sendNotification($post);
              DB::commit();
-             return response()->json(['message'=>'post created successfully']);
+             return response()->json(['message'=>"post created successfully and you will receive {$post->price} $"]);
          }catch (Exception $e){
              DB::rollBack();
              return $e->getMessage();

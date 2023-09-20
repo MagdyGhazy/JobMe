@@ -63,13 +63,13 @@ abstract class FileFactoryCommand extends Command
         $this->makeDir(dirname($path));
         if ($this->file->exists($path))
         {
-            return $this->info('this file is already exist');
+            return $this->error("{$this->setStubName()} is already exist");
         }
         $stubPath =$this->stubPath();
         $stubVariables =$this->stubVariables();
         $content = $this->stubContent($stubPath,$stubVariables);
         $this->file->put($path,$content);
-        $this->info('this file is created successfully');
+        $this->info("{$this->setStubName()} is created successfully");
 
     }
 

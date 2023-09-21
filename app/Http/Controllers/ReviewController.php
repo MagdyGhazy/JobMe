@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\PostFilter;
 use App\Http\Requests\Client\ReviewRequest;
 use App\Http\Resources\ReviewResource;
 use App\Models\Review;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class ReviewController extends Controller
@@ -24,15 +27,12 @@ class ReviewController extends Controller
     {
 
         $review = QueryBuilder::for(Review::class)
-            ->allowedFilters(['comment', 'rate'])
+            ->allowedFilters((new PostFilter())->filter())
             ->wherePostId($id)
             ->get();
 
-
-//        $review = Review::wherePostId($id)->get();
         $average = $review->sum('rate') / $review->count();
         return response()->json([
-
             "rates"=> round($average,1),
             "data"=>ReviewResource::collection($review),
 

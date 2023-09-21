@@ -59,4 +59,8 @@ class Worker extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims() {
         return [];
     }
+    public function Posts()
+    {
+        return $this->hasMany(Post::class,'worker_id');
+    }
 }

@@ -18,7 +18,7 @@ class ReviewResource extends JsonResource
             'client' => $this->client->name,
             'rate' => $this->rate,
             'comment' => $this->comment,
-            'worker' => $this->post->worker["name"],
+            'worker' => $this->post->worker->name,
         ];
     }
 }

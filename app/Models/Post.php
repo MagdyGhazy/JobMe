@@ -23,4 +23,10 @@ class Post extends Model
          //   ->select(['id','name'])
         ;
     }
+    public function review()
+    {
+        return $this->hasMany(Review::class,'post_id')
+            //   ->select(['id','name'])
+            ;
+    }
 }

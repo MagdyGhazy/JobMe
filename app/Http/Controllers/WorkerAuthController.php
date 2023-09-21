@@ -4,6 +4,7 @@ use App\Http\Requests\Worker\WorkerLoginRequest;
 use App\Http\Requests\Worker\WorkerRegisterRequest;
 use App\Models\Worker;
 use App\Services\WorkerServices\WorkerLoginService;
+use App\Services\WorkerServices\WorkerProfileService;
 use App\Services\WorkerServices\WorkerRegisterService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,10 +14,12 @@ class WorkerAuthController extends Controller
 
     protected $workerLoginService;
     protected $workerRegisterService;
-    public function __construct(WorkerLoginService $workerLoginService,WorkerRegisterService $workerRegisterService) {
+    protected $workerProfileService;
+    public function __construct(WorkerLoginService $workerLoginService,WorkerRegisterService $workerRegisterService,WorkerProfileService $workerProfileService) {
         $this->middleware('auth:worker', ['except' => ['login', 'register']]);
         $this->workerLoginService = $workerLoginService;
         $this->workerRegisterService = $workerRegisterService;
+        $this->workerProfileService = $workerProfileService;
     }
 
     public function login(WorkerLoginRequest $request){
@@ -37,7 +40,7 @@ class WorkerAuthController extends Controller
     }
 
     public function userProfile() {
-        return response()->json(auth()->guard('worker')->user());
+        return $this->workerProfileService->userProfile();
     }
 
 }

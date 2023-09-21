@@ -5,6 +5,7 @@ use App\Http\Controllers\ClientAuthController;
 use App\Http\Controllers\ClientOrderController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\WorkerAuthController;
 use App\Models\Client;
 use Illuminate\Http\Request;
@@ -83,6 +84,12 @@ Route::middleware('DbBackup')->prefix('auth')->group(function () {
                 Route::post('/one_post/{id}', 'showPost');
                 Route::post('/approve_post', 'postStatus');
             });
+
+        });
+
+        Route::controller(ReviewController::class)->group(function () {
+            Route::post('/review', 'store')->middleware('auth:client');
+            Route::get('/post_review/{id}', 'showPostReview');
 
         });
     });

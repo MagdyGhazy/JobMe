@@ -8,7 +8,7 @@ use Illuminate\Support\Pluralizer;
 
 class CreateServiceClass extends FileFactoryCommand
 {
-    protected $signature = 'make:service {classname}';
+    protected $signature = "make:service {name}";
 
     protected $description = 'this command for making service';
 

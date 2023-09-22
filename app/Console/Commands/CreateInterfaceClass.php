@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 
 class CreateInterfaceClass extends FileFactoryCommand
 {
-    protected $signature = 'make:interface {classname}';
+    protected $signature = 'make:interface {name}';
 
     protected $description = 'this command for making interface';
 

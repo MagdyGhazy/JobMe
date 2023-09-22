@@ -43,6 +43,7 @@ Route::middleware('DbBackup')->prefix('auth')->group(function () {
             Route::post('/logout', 'logout');
             Route::post('/refresh','refresh');
             Route::get('/user-profile', 'userProfile');
+            Route::get('/user-edit-profile', 'edit');
             Route::post('/edit-profile', 'edit');
         });
 

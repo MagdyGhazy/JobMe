@@ -43,4 +43,14 @@ class WorkerAuthController extends Controller
         return $this->workerProfileService->userProfile();
     }
 
+    public function edit() {
+        return response()->json([
+           "worker" => Worker::find(auth()->guard('worker')->id())
+        ]);
+    }
+
+    public function update() {
+        return ($this->workerProfileService)->userProfile();
+    }
+
 }

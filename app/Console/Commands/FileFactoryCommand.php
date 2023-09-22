@@ -10,6 +10,7 @@ abstract class FileFactoryCommand extends Command
 {
 
     protected $file;
+    protected $newContent;
 
     abstract function setStubName():string;
     abstract function setStubPath():string;
@@ -37,24 +38,37 @@ abstract class FileFactoryCommand extends Command
     }
     public function stubVariables()
     {
+        $name = $this->singleClassName($this->argument('name'));
+        $nameParts = explode('/', $name);
+        if (count($nameParts) >= 2){
+            $namespace = $nameParts[0];
+            $classname = $nameParts[1];
+            return [
+                'NAME' => $this->singleClassName($classname),
+                'DIR' =>  "\\".$namespace,
+            ];
+        }
+
         return [
-            'NAME' => $this->singleClassName($this->argument('classname')),
+            'NAME' => $this->singleClassName($name),
+            'DIR' => "",
         ];
+
     }
     public function stubContent($stubPath,$stubVariables)
     {
         $content = file_get_contents($stubPath);
         foreach ($stubVariables as $key => $replace)
         {
-            $newContent = str_replace('$'.$key ,$replace,$content);
+            $content = str_replace('$'.$key ,$replace,$content);
         }
-        return $newContent;
+        return $content;
     }
     protected function makePath()
     {
         $path = $this->setStubPath();
         $suffix = $this->setSuffix();
-        return base_path($path).$this->singleClassName($this->argument('classname'))."{$suffix}.php";
+        return base_path($path).$this->singleClassName($this->argument('name'))."{$suffix}.php";
     }
 
     public function handle()

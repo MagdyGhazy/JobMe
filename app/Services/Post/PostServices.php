@@ -69,7 +69,7 @@ class PostServices
              foreach ($request->file('photos') as $photo){
                  $postPhoto = new PostPhotos();
                  $postPhoto->post_id = $post->id;
-                 $postPhoto->photo = $photo->store('posts/photos');
+                 $postPhoto->photo = $photo->store('img/posts/photos');
                  $postPhoto->save();
              }
          }

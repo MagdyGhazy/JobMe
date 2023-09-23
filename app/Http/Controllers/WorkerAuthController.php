@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use App\Http\Requests\Worker\UpdateWorkerProfileRequest;
 use App\Http\Requests\Worker\WorkerLoginRequest;
 use App\Http\Requests\Worker\WorkerRegisterRequest;
 use App\Models\Worker;
@@ -49,8 +50,8 @@ class WorkerAuthController extends Controller
         ]);
     }
 
-    public function update() {
-        return ($this->workerProfileService)->userProfile();
+    public function update(UpdateWorkerProfileRequest $request) {
+        return $this->workerProfileService->update($request);
     }
 
 }

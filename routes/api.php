@@ -44,7 +44,7 @@ Route::middleware('DbBackup')->prefix('auth')->group(function () {
             Route::post('/refresh','refresh');
             Route::get('/user-profile', 'userProfile');
             Route::get('/user-edit-profile', 'edit');
-            Route::post('/edit-profile', 'edit');
+            Route::post('/user-update-profile', 'update');
         });
 
         Route::controller(ClientOrderController::class)->prefix('order')->middleware('auth:worker')->group(function () {
